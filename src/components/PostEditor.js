@@ -12,7 +12,6 @@ import {
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import { FullscreenExit } from '@material-ui/icons';
 
 const styles = theme => ({
     modal: {
@@ -41,11 +40,11 @@ const PostEditor = ({ classes, post, onSave, history }) => (
         {({ handleSubmit }) => (
             <Modal 
                 className={classes.modal}
-                onClose={history.goBack()}
+                onClose={() => {history.goBack()}}
                 open
             >
                 <Card className={classes.modalCard}>
-                    <Form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <CardContent className={classes.modalCardContent}>
                             <Field name='title'>
                                 {({ input }) => <TextField label='Title' autoFocus {...input} />}
@@ -66,7 +65,7 @@ const PostEditor = ({ classes, post, onSave, history }) => (
                             <Button size='small' color='primary' type='submit'>Save</Button>
                             <Button size='small' onClick={() => history.goBack()}>Cancel</Button>
                         </CardActions>
-                    </Form>
+                    </form>
                 </Card>
             </Modal>
         )}

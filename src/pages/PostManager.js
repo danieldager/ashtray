@@ -16,6 +16,7 @@ import { Delete as DeleteIcon, Add as AddIcon } from '@material-ui/icons';
 import moment from 'moment';
 import { find, orderBy } from 'lodash';
 import { compose } from 'recompose';
+import axios from 'axios';
 
 import PostEditor from '../components/PostEditor';
 import ErrorSnackbar from '../components/ErrorSnackbar';
@@ -35,9 +36,9 @@ const styles = theme => ({
     },
 });
 
-const API = process.enb.REACT_APP_API || 'http:/localhost:3001';
+const API = process.env.REACT_APP_API || 'http://localhost:3001';
 
-class PostsManager extends Component {
+class PostManager extends Component {
     state = {
         loading: true,
         posts: [],
@@ -50,28 +51,31 @@ class PostsManager extends Component {
 
     async fetch(method, endpoint, body) {
         try {
-            const response = await fetch(`${API}${endpoint}`, {
-                method,
+            const config = {
+                url: `${API}${endpoint}`,
+                method: method,
                 body: body && JSON.stringify(body),
-                headers: {
+                headers: { 
                     'content-type': 'application/json',
                     accept: 'application/json',
-                    authorization: `Bearer ${await this.props.authService.getAccessToken()}`,
+                    authorization: `Bearer ${await this.props.authService.getAccessToken()}`, 
                 },
-            });
+            };
+
+            const response = axios(config).then(res => console.log(res.json()));
             return await response.json();
+
         } catch (error) {
             console.error(error);
-            
             this.setState({ error });
         }
     }
 
     async getPosts() {
-        this.setState({ loading: false, posts: (await this.fetch('get', '/posts')) [] });
+        this.setState({ loading: false, posts: (await this.fetch('get', '/posts')) || [] });
     }
 
-    savePost = async (posts) => {
+    savePost = async (post) => {
         if (post.id) {
             await this.fetch('put', `/posts/${post.id}`, post);
         } else {
@@ -103,7 +107,7 @@ class PostsManager extends Component {
 
         return (
             <Fragment>
-                <Typography variant='h4'>Posts Manager</Typography>
+                <Typography variant='h4'>Post Manager</Typography>
                 {this.state.posts.length > 0 ? (
                     <Paper elevation={1}  className={classes.posts}>
                         <List>
@@ -145,3 +149,9 @@ class PostsManager extends Component {
         );
     }
 }
+
+export default compose(
+    withOktaAuth,
+    withRouter,
+    withStyles(styles),
+)(PostManager);

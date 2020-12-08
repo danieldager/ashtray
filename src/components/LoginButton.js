@@ -63,7 +63,7 @@ class LoginButton extends Component {
                     anchorEl={menuAnchorEl}
                     anchorOrigin={menuPosition}
                     transformOrigin={menuPosition}
-                    open={!menuAnchorEl}
+                    open={!!menuAnchorEl}
                     onClose={this.handleMenuClose}
                 >
                     <MenuItem onClick={this.logout}>

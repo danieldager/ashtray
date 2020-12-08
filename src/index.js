@@ -13,13 +13,11 @@ const oktaConfig = {
 };
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Security {...oktaConfig}>
-        <App />
-      </Security>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Security {...oktaConfig}>
+      <App />
+    </Security>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

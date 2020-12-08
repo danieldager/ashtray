@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
     AppBar,
+    Button,
     Toolbar,
     Typography,
     withStyles,
@@ -18,8 +20,10 @@ const Header = ({ classes }) => (
     <AppBar position='static'>
         <Toolbar>
             <Typography variant='h6' color='inherit'>
-                My React App
+                Ashtray
             </Typography>
+            <Button color='inherit' component={Link} to='/'>Home</Button>
+            <Button color='inherit' component={Link} to='/posts'>Posts</Button>
             <div className={ classes.flex }/>
             <LoginButton />
         </Toolbar>

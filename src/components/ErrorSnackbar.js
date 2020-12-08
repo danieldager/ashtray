@@ -5,9 +5,9 @@ import {
     SnackbarContent,
     IconButton,
 } from '@material-ui/core';
-import { Error as ErrorIcon, close as CloseIcon } from '@material-ui/icons';
+import { Error as ErrorIcon, Close as CloseIcon } from '@material-ui/icons';
 import { compose, withState } from 'recompose';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 const styles = theme => ({
     snackbarContent: {
@@ -34,7 +34,7 @@ const ErrorSnackbar = ({id, message,onClose, classes }) => (
     >
         <SnackbarContent
             className={`${classes.icon} ${classes.iconVariant}`}
-            aria-describedly={id}
+            aria-describedby={id}
             message={
                 <span id={id} className={classes.message}>
                     <ErrorIcon className={`${classes.icon} ${classes.iconVariant}`} />
