@@ -62,7 +62,7 @@ class PostManager extends Component {
                 },
             };
 
-            const response = axios(config).then(res => console.log(res.json()));
+            const response = axios(config).then(res => res.data);
             return await response.json();
 
         } catch (error) {
